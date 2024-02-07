@@ -13,6 +13,7 @@ import '@react95/icons/icons.css';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 import axios from 'axios';
+import * as cheerio from "cheerio";
 
 /* Pick a theme of your choice */
 import original from 'react95/dist/themes/original';
@@ -23,49 +24,18 @@ import {
   BrowserRouter as Router,
 } from 'react-router-dom';
 
+const response = await axios.get("https://cors-anywhere.herokuapp.com/https://www.launchcaster.xyz/p/65c338033216ae5507e98120", {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
+ 
+});
+const selector = cheerio.load(response.data);
+var launcher = selector(".details_user__ptlCa").text() || "";
+console.log(launcher.substring(launcher.indexOf("@"), launcher.indexOf("launcher") - 1));
 
-
-
-
-const Wrapper = styled.div`
-  background: ${({ theme }) => theme.desktopBackground};
-  min-height: 100vh;
-  a:visited { color: LinkText; }
-  .window-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .close-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-left: -1px;
-    margin-top: -1px;
-    transform: rotateZ(45deg);
-    position: relative;
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      background: ${({ theme }) => theme.materialText};
-    }
-    &:before {
-      height: 100%;
-      width: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:after {
-      height: 3px;
-      width: 100%;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-`;
-
+var time = (selector(".details_date__alm2Z").text()) || "";
+console.log(time);
 
 
 const fid = 666;
