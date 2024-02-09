@@ -24,15 +24,31 @@ import {
   BrowserRouter as Router,
 } from 'react-router-dom';
 
-const response = await axios.get("https://cors-anywhere.herokuapp.com/https://www.launchcaster.xyz/p/65c338033216ae5507e98120", {
+
+
+const response = await axios.get("https://cors-anywhere.herokuapp.com/https://www.launchcaster.xyz/p/65c40e303216ae5507ef5743", {
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
  
 });
 const selector = cheerio.load(response.data);
-var launcher = selector(".details_user__ptlCa").text() || "";
-console.log(launcher.substring(launcher.indexOf("@"), launcher.indexOf("launcher") - 1));
+var launcher_q = selector(".details_user__ptlCa").text() || "";
+var launcher = (launcher_q.substring(launcher_q.indexOf("@"), launcher_q.indexOf("launcher") - 1));
+console.log(launcher);
+var addItems = selector('.details_user__ptlCa div a');
+var add = "";
+addItems.each((idx, el)=>{
+  const href= selector(el).attr("href");
+  if (idx == 0){
+    add = href || "";
+  }
+})
+if (add.length != 0) {
+  add = add.substring(add.indexOf("/launchers/") + 11, add.length);
+}
+console.log(add);
+
 
 var time = (selector(".details_date__alm2Z").text()) || "";
 console.log(time);
@@ -40,7 +56,7 @@ console.log(time);
 
 const fid = 666;
 const url = "https://fnames.farcaster.xyz/transfers?name";
-const name = "farcaster";
+const name = launcher;
 try {
     const x = await axios.get(`${url}=${name}`);
 
@@ -50,6 +66,19 @@ try {
     // Handle errors
     console.log("sorry bro..");
 }
+
+/*
+const key = "7CP6C-TFIQU-I5OYD-T3VJM-P65GS";
+const res2 = await axios.get('https://cors-anywhere.herokuapp.com/https://protocol.wield.co/farcaster/v2/user', {
+  params: {
+    'username': launcher
+  },
+  headers: {
+    'API-KEY': key
+  }
+});
+console.log(res2);
+*/
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <>
