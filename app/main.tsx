@@ -15,6 +15,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import * as cheerio from "cheerio";
 
+
+
 /* Pick a theme of your choice */
 import original from 'react95/dist/themes/original';
 import { styleReset } from 'react95';
@@ -67,18 +69,30 @@ try {
     console.log("sorry bro..");
 }
 
-/*
+
 const key = "7CP6C-TFIQU-I5OYD-T3VJM-P65GS";
-const res2 = await axios.get('https://cors-anywhere.herokuapp.com/https://protocol.wield.co/farcaster/v2/user', {
-  params: {
-    'username': launcher
-  },
+const config = {
+  method: 'get',
+  url: 'https://protocol.wield.co/farcaster/v2/username-by-connected-address?address='.concat(add),
   headers: {
-    'API-KEY': key
-  }
-});
-console.log(res2);
-*/
+    'API_KEY': key,
+    "Access-Control-Allow-Origin": "*",
+  },
+  
+  
+};
+axios(config)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+
+
+
+
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <>
