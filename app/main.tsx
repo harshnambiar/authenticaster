@@ -27,6 +27,22 @@ import {
 } from 'react-router-dom';
 
 
+const extractFarcasterHash = (text: string): string | null => {
+  // Regular expression to match a Farcaster hash
+  // It looks for '0x' followed by a sequence of hexadecimal characters
+  const regex = /0x[a-fA-F0-9]+/;
+
+  // Search for the pattern in the text
+  const match = text.match(regex);
+
+  // If a match is found, return it; otherwise return null
+  return match ? match[0] : null;
+};
+
+const fetch = async (query): Promise<any> => {
+  const farcaster_hash = extractFarcasterHash(query);
+}
+
 
 const response = await axios.get("https://cors-anywhere.herokuapp.com/https://www.launchcaster.xyz/p/65c40e303216ae5507ef5743", {
   headers: {
@@ -36,7 +52,7 @@ const response = await axios.get("https://cors-anywhere.herokuapp.com/https://ww
 });
 const selector = cheerio.load(response.data);
 var launcher_q = selector(".details_user__ptlCa").text() || "";
-var launcher = (launcher_q.substring(launcher_q.indexOf("@"), launcher_q.indexOf("launcher") - 1));
+var launcher = (launcher_q.substring(launcher_q.indexOf("@")+1, launcher_q.indexOf("launcher") - 1));
 console.log(launcher);
 var addItems = selector('.details_user__ptlCa div a');
 var add = "";
@@ -73,10 +89,11 @@ try {
 const key = "7CP6C-TFIQU-I5OYD-T3VJM-P65GS";
 const config = {
   method: 'get',
-  url: 'https://protocol.wield.co/farcaster/v2/username-by-connected-address?address='.concat(add),
+  url: 'https://build.far.quest/farcaster/v2/user-by-username='.concat(launcher),
   headers: {
     'API_KEY': key,
     "Access-Control-Allow-Origin": "*",
+    'accept': 'application/json',
   },
   
   
@@ -88,6 +105,21 @@ axios(config)
   .catch(function (error) {
     console.log(error);
   })
+
+try{
+  const {
+    data: tree
+  } = await axios.get('https://33bits.xyz/api/farcaster/tree');
+
+  // Search for public key
+  const nodeIndex = tree.elements.findIndex((x: any) => x.fid === 237);
+  const node = tree.elements[nodeIndex];
+  console.log(node);
+}
+catch (err){
+  console.log(err);
+}
+  
 
 
 
