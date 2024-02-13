@@ -1,0 +1,81 @@
+/* HomePage.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #000; /* Pure black background */
+  }
+  
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    color: #fff; /* White text for contrast */
+    background-color: #000; /* Pure black background */
+
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: transparent;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    z-index: 1000; /* Ensure navbar is above other content */
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 44px;
+  }
+  
+  .navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar ul li a:hover {
+    color: #1db9c3; /* Highlight color */
+  }
+  
+  .hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Adjust based on your design */
+  }
+  
+  .hero-section img {
+    max-width: 100%;
+    height: auto;
+    animation: fadeInScale 1.5s ease forwards; /* Animation name, duration, easing, and fill-mode */
+  }
+  
+  .content {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+  }
+  
+  /* Keyframes for image animation */
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.8); /* Start with a slightly smaller scale */
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1); /* Scale back to normal size */
+    }
+  }
+  
+  /* Additional styles as needed */
+  
