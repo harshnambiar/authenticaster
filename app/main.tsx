@@ -19,6 +19,7 @@ const theme = createTheme({
     mode: 'dark',
   },
 });
+
 interface PageDetails {
   title: string;
   description: string;
@@ -50,7 +51,7 @@ const App: React.FC = () => {
         pageDetails.description = metaDescription.attr('content') || ''; // empty string if content is null
       }
 
-      console.log(pageDetails);
+      // console.log(pageDetails);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

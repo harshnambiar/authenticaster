@@ -1,10 +1,8 @@
-/* HomePage.css */
-
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: #000; /* Pure black background */
+    background-color: #000; 
   }
   
   .home-container {
@@ -12,9 +10,9 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Full viewport height */
-    color: #fff; /* White text for contrast */
-    background-color: #000; /* Pure black background */
+    height: 100vh; 
+    color: #fff; 
+    background-color: #000; 
 
   }
   
@@ -26,7 +24,7 @@ body, html {
     padding: 40px;
     display: flex;
     justify-content: center;
-    z-index: 1000; /* Ensure navbar is above other content */
+    z-index: 1000; 
   }
   
   .navbar ul {
@@ -43,20 +41,20 @@ body, html {
   }
   
   .navbar ul li a:hover {
-    color: #1db9c3; /* Highlight color */
+    color: #1db9c3; 
   }
   
   .hero-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh; /* Adjust based on your design */
+    height: 80vh; 
   }
   
   .hero-section img {
     max-width: 100%;
     height: auto;
-    animation: fadeInScale 1.5s ease forwards; /* Animation name, duration, easing, and fill-mode */
+    animation: fadeInScale 1.5s ease forwards; 
   }
   
   .content {
@@ -65,17 +63,16 @@ body, html {
     font-size: 18px;
   }
   
-  /* Keyframes for image animation */
+  
   @keyframes fadeInScale {
     0% {
       opacity: 0;
-      transform: scale(0.8); /* Start with a slightly smaller scale */
+      transform: scale(0.8); 
     }
     100% {
       opacity: 1;
-      transform: scale(1); /* Scale back to normal size */
+      transform: scale(1); 
     }
   }
   
-  /* Additional styles as needed */
   
