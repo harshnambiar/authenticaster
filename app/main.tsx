@@ -4,27 +4,18 @@ window.Buffer = Buffer;
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { Provider } from 'react-redux';
-
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import './styles/App.css';
 import '@react95/icons/icons.css';
 
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import styled from 'styled-components';
+
 import axios from 'axios';
 import * as cheerio from "cheerio";
 
 
-
-/* Pick a theme of your choice */
-import original from 'react95/dist/themes/original';
-import { styleReset } from 'react95';
-
-
-import {
-  BrowserRouter as Router,
-} from 'react-router-dom';
+import circuit from '../circuits/target/main.json';
+import { BarretenbergBackend } from '@noir-lang/backend_barretenberg';
+import { Noir } from '@noir-lang/noir_js';
 
 
 const extractFarcasterHash = (text: string): string | null => {
@@ -115,6 +106,29 @@ try{
   const nodeIndex = tree.elements.findIndex((x: any) => x.fid === 237);
   const node = tree.elements[nodeIndex];
   console.log(node);
+   // @ts-ignore
+   const backend = new BarretenbergBackend(circuit);
+   // @ts-ignore
+   const noir = new Noir(circuit, backend);
+   const input = {
+    fid: node.fid,
+    public_key: node.key,
+    note_root: tree.root,
+    index: nodeIndex,
+    note_hash_path: node.path,
+ 
+  };
+  
+
+  console.log('Hold on, generating the zk proof…');
+
+  const proof = await noir.generateFinalProof(input);
+  if (proof){
+    console.log("successful verification");
+  }
+  else {
+    console.log("verification failed");
+  }
 }
 catch (err){
   console.log(err);
