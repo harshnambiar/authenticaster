@@ -1,41 +1,29 @@
 use dep::std;
 
+// Adjusted Noir program example
 
-
-
-
-fn main(
-  fid: Field,
-  public_key: Field,
-  note_root: pub Field,
-  index: Field,
-  note_hash_path: [Field; 16],
-) -> pub bool {
-  
-  let commitment = std::hash::mimc_bn254([fid, public_key]);
-
-  // Check that the input note commitment is in the root
-  let new_root = compute_root_from_leaf(commitment, index, note_hash_path);
-  assert(new_root == note_root);
-
-  true
+fn main(public leaf: Field, public index: u32, public hash_path: [Field; 2], public merkle_root: Field) {
+    let computed_root = compute_merkle_root(leaf, index, hash_path);
+    // Use assertion to validate Merkle root; there's no need to return a value
+    assert(computed_root == merkle_root, "Merkle root verification failed.");
 }
 
-
-// Returns the root of the tree from the provided leaf and its hashpath, using mimc hash
-fn compute_root_from_leaf(leaf : Field, index : Field, hash_path: [Field; 16]) -> Field {
-    let n = hash_path.len();
-    let index_bits = index.to_le_bits(n as u32);
+// Adjusted to use u32 for index to allow bitwise operations
+fn compute_merkle_root(leaf: Field, index: u32, hash_path: [Field; 2]) -> Field {
     let mut current = leaf;
-    for i in 0..n {
-        let path_bit = index_bits[i] as bool;
-        let (hash_left, hash_right) = if path_bit {
-            (hash_path[i], current)
+    for i in 0..2 {
+        // Adjusted path_bit calculation
+        let path_bit = (index >> i) & 1;
+        current = if path_bit == 1 {
+            hash(current, hash_path[i])
         } else {
-            (current, hash_path[i])
+            hash(hash_path[i], current)
         };
-
-        current = std::hash::mimc_bn254([hash_left, hash_right]);
-    };
+    }
     current
+}
+
+// Using MiMC hash function from the standard library
+fn hash(a: Field, b: Field) -> Field {
+    std::hash::mimc_bn254([a, b])
 }
