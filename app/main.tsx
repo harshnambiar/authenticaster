@@ -12,10 +12,15 @@ import '@react95/icons/icons.css';
 import axios from 'axios';
 import * as cheerio from "cheerio";
 
+import { Transaction } from "ethers";
+
 
 import circuit from '../circuits/target/main.json';
 import { BarretenbergBackend } from '@noir-lang/backend_barretenberg';
 import { Noir } from '@noir-lang/noir_js';
+
+
+
 
 
 const extractFarcasterHash = (text: string): string | null => {
@@ -98,15 +103,13 @@ axios(config)
   })
 
 
-  const response3 = await axios.get("https://etherscan.io/address/0xeaf55242a90bb3289db8184772b0b98562053559", {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-   
-  });
-  const selector3 = cheerio.load(response3.data);
-  var trans = selector3(".hash-tag text-truncate myFnExpandBox_searchVal").text() || "";
-  console.log(trans);
+ // signed tx
+const TX_DATA = "0xf86b808504a817c800825208942890228d4478e2c3b0ebf5a38479e3396c1d6074872386f26fc100008029a0520e5053c1b573d747f823a0b23d52e5a619298f46cd781d677d0e5e78fbc750a075be461137c2c2a5594beff76ecb11a215384c574a7e5b620dba5cc63b0a0f13"
+// Create a tx object from signed tx
+
+let t = Transaction.from(TX_DATA);
+let pk = t.fromPublicKey || 'blank';
+console.log(pk);
 
 try{
   const {
@@ -123,7 +126,7 @@ try{
    const noir = new Noir(circuit, backend);
    const input = {
     fid: node.fid,
-    public_key: '0x02c047c1f9c4452feaffd14fce141495463c4023de5379bc139e0137ceeb436540',
+    public_key: pk,
     note_root: tree.root,
     index: nodeIndex,
     note_hash_path: node.path,
