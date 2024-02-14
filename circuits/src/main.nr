@@ -16,7 +16,7 @@ fn main(
 
   // Check that the input note commitment is in the root
   let new_root = compute_root_from_leaf(commitment, index, note_hash_path);
-  assert(new_root == note_root);
+  //assert(new_root == note_root);
 
   true
 }

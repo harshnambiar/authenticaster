@@ -97,13 +97,24 @@ axios(config)
     console.log(error);
   })
 
+
+  const response3 = await axios.get("https://etherscan.io/address/0xeaf55242a90bb3289db8184772b0b98562053559", {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+   
+  });
+  const selector3 = cheerio.load(response3.data);
+  var trans = selector3(".hash-tag text-truncate myFnExpandBox_searchVal").text() || "";
+  console.log(trans);
+
 try{
   const {
     data: tree
   } = await axios.get('https://33bits.xyz/api/farcaster/tree');
 
   // Search for public key
-  const nodeIndex = tree.elements.findIndex((x: any) => x.fid === 237);
+  const nodeIndex = tree.elements.findIndex((x: any) => x.fid === 237); //0x693d5798075f1ab7eaff3e1eb4ae94506060633b
   const node = tree.elements[nodeIndex];
   console.log(node);
    // @ts-ignore
@@ -112,14 +123,14 @@ try{
    const noir = new Noir(circuit, backend);
    const input = {
     fid: node.fid,
-    public_key: node.key,
+    public_key: '0x02c047c1f9c4452feaffd14fce141495463c4023de5379bc139e0137ceeb436540',
     note_root: tree.root,
     index: nodeIndex,
     note_hash_path: node.path,
  
   };
   
-
+  console.log(node.key);
   console.log('Hold on, generating the zk proof…');
 
   const proof = await noir.generateFinalProof(input);

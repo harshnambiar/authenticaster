@@ -12,3 +12,11 @@ Scores are given out of 10.
 3-5: The project has received very low attention, and the launcher and the project have a medium credibility score. Alternatively, the project has received moderate attention, but the launcher or the project have a low credibility score. Such projects have a lower probability of being legitimate.  
 0-4: The project hasn't generated much hype at all, and the project and the launcher (usually both) have a low credibility score. Financially engaging with such a project should be done at ones own risk.
 
+# updated to-do  
+1. the far.quest query fetches the connectedAddress for given fid, use that in axios.get(url) where url = 'https://etherscan.io/address/'.concat(connectedAddress)  
+2. in that axios.get, use cheerio selector to get the text of the first transaction hash, say t_hash   
+3. do an axios.get(url2) where url2 = 'https://etherscan.io/getRawTx?tx='.concat(t_hash)  
+4. fetch the resulting value  
+5. do an axios.get for https://toolkit.abdk.consulting/ethereum#recover-address  
+6. make the scraper click the radio button for transaction (possible?)  
+7. fetch the public key value from the result
