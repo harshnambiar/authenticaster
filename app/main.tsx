@@ -147,6 +147,29 @@ try{
 catch (err){
   console.log(err);
 }
+
+console.log("hi2");
+try {
+  //to add data in the server
+  const data = {
+    votes: 30,
+    launchAge: 8,
+    proofFlag: true,
+    followers: 3000,
+    accTimestamp: 111111111,
+  }
+  const response = await axios.post("http://localhost:5000/api/authenticaster/score", {
+    data: data,
+  });
+  console.log("hi");
+  console.log(response);
+  
+  
+  
+  
+} catch (err) {
+  console.log(err);
+}
   
 
 
